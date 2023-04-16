@@ -7,19 +7,15 @@ import com.pugzarecute.exptracker.TruncationUtils;
 import com.pugzarecute.exptracker.networking.EXPTrackerPacketHandler;
 import com.pugzarecute.exptracker.networking.InitHuntPacketC2S;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -31,8 +27,6 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static net.minecraft.client.gui.GuiComponent.blit;
-import static net.minecraft.client.gui.GuiComponent.fill;
-import static net.minecraft.client.gui.screens.social.PlayerEntry.BG_FILL_REMOVED;
 
 @OnlyIn(Dist.CLIENT)
 @ParametersAreNonnullByDefault
@@ -57,7 +51,7 @@ public class CustomPlayerEntry extends ContainerObjectSelectionList.Entry<Custom
         this.minecraft = minecraft;
         this.playerName = name;
         this.skinGetter = skinProvider;
-        this.uuid=uuid;
+        this.uuid = uuid;
         this.screen = screen;
         final Component component = Component.translatable("gui.socialInteractions.narration.hide", name);
         this.hideTooltip = minecraft.font.split(HIDE_TEXT_TOOLTIP, 150);
@@ -70,7 +64,7 @@ public class CustomPlayerEntry extends ContainerObjectSelectionList.Entry<Custom
                 public void onTooltip(Button p_170109_, PoseStack p_170110_, int p_170111_, int p_170112_) {
                     CustomPlayerEntry.this.tooltipHoverTime += minecraft.getDeltaFrameTime();
                     if (CustomPlayerEntry.this.tooltipHoverTime >= 10.0F) {
-                            CustomPlayerEntry.postRenderTooltip(screen, p_170110_, CustomPlayerEntry.this.hideTooltip, p_170111_, p_170112_);
+                        CustomPlayerEntry.postRenderTooltip(screen, p_170110_, CustomPlayerEntry.this.hideTooltip, p_170111_, p_170112_);
                     }
 
                 }
@@ -99,17 +93,17 @@ public class CustomPlayerEntry extends ContainerObjectSelectionList.Entry<Custom
         int l;
         RenderSystem.setShaderTexture(0, PlayerChooserScreen.TEXTURE);
         if (component == CommonComponents.EMPTY) {
-            blit(pPoseStack,pLeft,pTop,0,2f,80f,  pWidth, pHeight,256,256);
+            blit(pPoseStack, pLeft, pTop, 0, 2f, 80f, pWidth, pHeight, 256, 256);
             l = pTop + (pHeight - 9) / 2;
         } else {
-            blit(pPoseStack,pLeft,pTop,0,2f,80f,  pWidth, pHeight,256,256);
+            blit(pPoseStack, pLeft, pTop, 0, 2f, 80f, pWidth, pHeight, 256, 256);
             l = pTop + (pHeight - (9 + 9)) / 2;
-            this.minecraft.font.draw(pPoseStack, component, (float)k, (float)(l + 12), PLAYER_STATUS_COLOR);
+            this.minecraft.font.draw(pPoseStack, component, (float) k, (float) (l + 12), PLAYER_STATUS_COLOR);
         }
 
         RenderSystem.setShaderTexture(0, this.skinGetter.get());
         PlayerFaceRenderer.draw(pPoseStack, i, j, 24);
-        this.minecraft.font.draw(pPoseStack, this.playerName, (float)k, (float)l, PLAYERNAME_COLOR);
+        this.minecraft.font.draw(pPoseStack, this.playerName, (float) k, (float) l, PLAYERNAME_COLOR);
 
         if (this.huntButton != null) {
             float f = this.tooltipHoverTime;
@@ -142,7 +136,7 @@ public class CustomPlayerEntry extends ContainerObjectSelectionList.Entry<Custom
     }
 
     private Component getStatusComponent() {
-        return Component.literal(TruncationUtils.floatTruncate(screen.players.get(uuid))+" blocks");
+        return Component.literal(TruncationUtils.floatTruncate(screen.players.get(uuid)) + " blocks");
     }
 
     static void postRenderTooltip(PlayerChooserScreen screen, PoseStack poseStack, List<FormattedCharSequence> message, int x, int y) {
