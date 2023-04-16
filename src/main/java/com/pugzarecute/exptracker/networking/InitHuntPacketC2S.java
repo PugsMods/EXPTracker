@@ -1,13 +1,10 @@
 package com.pugzarecute.exptracker.networking;
 
-import com.pugzarecute.exptracker.item.HunterItem;
 import com.pugzarecute.exptracker.item.ItemRg;
+import com.pugzarecute.exptracker.server.Handler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraftforge.network.NetworkEvent;
@@ -16,33 +13,33 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
-import com.pugzarecute.exptracker.server.Handler;
-
 public class InitHuntPacketC2S {
     public final UUID whom;
 
-    public InitHuntPacketC2S(UUID whom){
-        this.whom=whom;
-    }
-    public void encode(FriendlyByteBuf friendlyByteBuf){
-        friendlyByteBuf.writeUUID(whom);
-    }
-    public static InitHuntPacketC2S decode(FriendlyByteBuf friendlyByteBuf){
-        return  new InitHuntPacketC2S(friendlyByteBuf.readUUID());
+    public InitHuntPacketC2S(UUID whom) {
+        this.whom = whom;
     }
 
-    public boolean handle(Supplier<NetworkEvent.Context> contextSupplier){
-        final var success= new AtomicBoolean();
+    public void encode(FriendlyByteBuf friendlyByteBuf) {
+        friendlyByteBuf.writeUUID(whom);
+    }
+
+    public static InitHuntPacketC2S decode(FriendlyByteBuf friendlyByteBuf) {
+        return new InitHuntPacketC2S(friendlyByteBuf.readUUID());
+    }
+
+    public boolean handle(Supplier<NetworkEvent.Context> contextSupplier) {
+        final var success = new AtomicBoolean();
         success.set(false);
-        contextSupplier.get().enqueueWork(() ->{
+        contextSupplier.get().enqueueWork(() -> {
 
             Level level = contextSupplier.get().getSender().level;
             Player player = contextSupplier.get().getSender();
-            if(player.getPersistentData().getBoolean("exptracker.safety_token")){
-                if(player.getUUID().equals(this.whom)){
+            if (player.getPersistentData().getBoolean("exptracker.safety_token")) {
+                if (player.getUUID().equals(this.whom)) {
                     player.sendSystemMessage(Component.translatable("exptracker.self_hunt"));
                     contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
-                } else if (player.getServer().getPlayerList().getPlayerCount()<=1) {
+                } else if (player.getServer().getPlayerList().getPlayerCount() <= 1) {
                     player.sendSystemMessage(Component.translatable("exptracker.no_players"));
                     contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
                 } else if (!(level.dimensionTypeId() == BuiltinDimensionTypes.OVERWORLD)) {
@@ -64,14 +61,14 @@ public class InitHuntPacketC2S {
                     success.set(true);
                     Handler.onPlayerChoose(contextSupplier.get().getSender(), contextSupplier.get().getSender().getLevel().getServer().getPlayerList().getPlayer(whom));
                 }
-                if(!success.get()) Handler.cleanup(player,player);
+                if (!success.get()) Handler.cleanup(player, player);
             }
         });
         contextSupplier.get().setPacketHandled(true);
         return success.get();
     }
 
-    public void  messageConsumer(Supplier<NetworkEvent.Context> context){
+    public void messageConsumer(Supplier<NetworkEvent.Context> context) {
 
     }
 }

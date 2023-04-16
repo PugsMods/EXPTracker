@@ -18,30 +18,32 @@ public class HuntDataPacketS2C {
     public final int y;
     public final int z;
 
-    public HuntDataPacketS2C(boolean end,int x,int y, int z){
-        this.end=end;
-        this.x=x;
-        this.y=y;
-        this.z=z;
+    public HuntDataPacketS2C(boolean end, int x, int y, int z) {
+        this.end = end;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
-    public void encode(FriendlyByteBuf friendlyByteBuf){
+
+    public void encode(FriendlyByteBuf friendlyByteBuf) {
         friendlyByteBuf.writeBoolean(end);
         friendlyByteBuf.writeInt(x);
         friendlyByteBuf.writeInt(y);
         friendlyByteBuf.writeInt(z);
     }
-    public static HuntDataPacketS2C decode(FriendlyByteBuf friendlyByteBuf){
-        return  new HuntDataPacketS2C(friendlyByteBuf.readBoolean(),friendlyByteBuf.readInt(),friendlyByteBuf.readInt(),friendlyByteBuf.readInt());
+
+    public static HuntDataPacketS2C decode(FriendlyByteBuf friendlyByteBuf) {
+        return new HuntDataPacketS2C(friendlyByteBuf.readBoolean(), friendlyByteBuf.readInt(), friendlyByteBuf.readInt(), friendlyByteBuf.readInt());
     }
 
-    public boolean handle(Supplier<NetworkEvent.Context> contextSupplier){
-        final var success= new AtomicBoolean();
-        contextSupplier.get().enqueueWork(() ->{
-            if(!end){
-                BlockPos offsetPlayerPos = new BlockPos(x,y,z);
-                NewPolyRenderer.drawPlayerBox(JourneyMapInterface.get().api, offsetPlayerPos,Level.OVERWORLD);
-            }else{
-                for (Waypoint w:JourneyMapInterface.get().api.getWaypoints(EXPTracker.MODID)){
+    public boolean handle(Supplier<NetworkEvent.Context> contextSupplier) {
+        final var success = new AtomicBoolean();
+        contextSupplier.get().enqueueWork(() -> {
+            if (!end) {
+                BlockPos offsetPlayerPos = new BlockPos(x, y, z);
+                NewPolyRenderer.drawPlayerBox(JourneyMapInterface.get().api, offsetPlayerPos, Level.OVERWORLD);
+            } else {
+                for (Waypoint w : JourneyMapInterface.get().api.getWaypoints(EXPTracker.MODID)) {
                     JourneyMapInterface.get().api.remove(w);
                 }
                 JourneyMapInterface.get().api.removeAll(EXPTracker.MODID);
@@ -52,7 +54,7 @@ public class HuntDataPacketS2C {
         return success.get();
     }
 
-    public void  messageConsumer(Supplier<NetworkEvent.Context> context){
+    public void messageConsumer(Supplier<NetworkEvent.Context> context) {
 
     }
 }

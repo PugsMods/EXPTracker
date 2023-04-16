@@ -1,10 +1,8 @@
 package com.pugzarecute.exptracker.item;
 
 
-
 import com.pugzarecute.exptracker.networking.EXPTrackerPacketHandler;
 import com.pugzarecute.exptracker.networking.RequestPlayersPacketC2S;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -24,11 +22,11 @@ public class HunterItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         //TODO: devhack
 
-        if(!level.isClientSide){
+        if (!level.isClientSide) {
             CompoundTag playerData = player.getPersistentData();
             playerData.putBoolean("exptracker.safety_token", true);
             player.getItemInHand(hand).shrink(1);
-        }else{
+        } else {
             EXPTrackerPacketHandler.CHANNEL.sendToServer(new RequestPlayersPacketC2S());
         }
         return InteractionResultHolder.success(player.getItemInHand(hand));
