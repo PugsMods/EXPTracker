@@ -39,12 +39,12 @@ public class HuntDataPacketS2C {
         contextSupplier.get().enqueueWork(() ->{
             if(!end){
                 BlockPos offsetPlayerPos = new BlockPos(x,y,z);
-                NewPolyRenderer.drawPlayerBox(JourneyMapInterface.getMap().api, offsetPlayerPos,Level.OVERWORLD);
+                NewPolyRenderer.drawPlayerBox(JourneyMapInterface.get().api, offsetPlayerPos,Level.OVERWORLD);
             }else{
-                for (Waypoint w:JourneyMapInterface.getMap().api.getWaypoints(EXPTracker.MODID)){
-                    JourneyMapInterface.getMap().api.remove(w);
+                for (Waypoint w:JourneyMapInterface.get().api.getWaypoints(EXPTracker.MODID)){
+                    JourneyMapInterface.get().api.remove(w);
                 }
-                JourneyMapInterface.getMap().api.removeAll(EXPTracker.MODID);
+                JourneyMapInterface.get().api.removeAll(EXPTracker.MODID);
             }
             success.set(true);
         });
