@@ -14,7 +14,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.*;
+import java.util.Map;
+import java.util.UUID;
 
 @OnlyIn(Dist.CLIENT)
 public class PlayerChooserScreen extends Screen {
@@ -27,8 +28,9 @@ public class PlayerChooserScreen extends Screen {
     private boolean initialized;
     protected static boolean used = false;
 
-    protected final Map<UUID,Float> players;
-    public PlayerChooserScreen(Map<UUID,Float> players) {
+    protected final Map<UUID, Float> players;
+
+    public PlayerChooserScreen(Map<UUID, Float> players) {
         super(Component.literal("HuntScreen"));
         System.out.println(players.size());
         this.players = players;
@@ -88,7 +90,7 @@ public class PlayerChooserScreen extends Screen {
 
     public void removed() {
         minecraft.keyboardHandler.setSendRepeatsToGui(false);
-        if(!used) EXPTrackerPacketHandler.CHANNEL.sendToServer(new RefundItemsIfPlayerlistEmptyC2S());
+        if (!used) EXPTrackerPacketHandler.CHANNEL.sendToServer(new RefundItemsIfPlayerlistEmptyC2S());
     }
 
     public void renderBackground(PoseStack poseStack) {
@@ -98,7 +100,7 @@ public class PlayerChooserScreen extends Screen {
         blit(poseStack, i, 64, 1, 1, 236, 8);
         int j = backgroundUnits();
 
-        for(int k = 0; k < j; ++k) {
+        for (int k = 0; k < j; ++k) {
             blit(poseStack, i, 72 + 16 * k, 1, 10, 236, 16);
         }
 
@@ -107,7 +109,7 @@ public class PlayerChooserScreen extends Screen {
     }
 
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        if(players.size() ==0) {
+        if (players.size() == 0) {
             Minecraft.getInstance().player.sendSystemMessage(Component.translatable("exptracker.no_players"));
             Minecraft.getInstance().setScreen(null);
         }

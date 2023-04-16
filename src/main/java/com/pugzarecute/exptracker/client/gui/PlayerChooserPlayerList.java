@@ -32,18 +32,18 @@ public class PlayerChooserPlayerList extends ContainerObjectSelectionList<Custom
 
     public void render(PoseStack postStack, int mouseX, int mouseY, float partialTicks) {
         double guiScale = this.minecraft.getWindow().getGuiScale();
-        RenderSystem.enableScissor((int)((double)this.getRowLeft() * guiScale), (int)((double)(this.height - this.y1) * guiScale), (int)((double)(this.getScrollbarPosition() + 6) * guiScale), (int)((double)(this.height - (this.height - this.y1) - this.y0 - 4) * guiScale));
+        RenderSystem.enableScissor((int) ((double) this.getRowLeft() * guiScale), (int) ((double) (this.height - this.y1) * guiScale), (int) ((double) (this.getScrollbarPosition() + 6) * guiScale), (int) ((double) (this.height - (this.height - this.y1) - this.y0 - 4) * guiScale));
         super.render(postStack, mouseX, mouseY, partialTicks);
         RenderSystem.disableScissor();
     }
 
-    public void updatePlayerList(Map<UUID,Float> players, double scrollAmount) {
+    public void updatePlayerList(Map<UUID, Float> players, double scrollAmount) {
         Map<UUID, CustomPlayerEntry> map = new LinkedHashMap<>();
         addOnlinePlayers(players, map);
         resetList(map.values(), scrollAmount);
     }
 
-    private void addOnlinePlayers(Map<UUID,Float> playerIDS, Map<UUID, CustomPlayerEntry> listings) {
+    private void addOnlinePlayers(Map<UUID, Float> playerIDS, Map<UUID, CustomPlayerEntry> listings) {
         ClientPacketListener clientpacketlistener = minecraft.player.connection;
 
         playerIDS.entrySet()
@@ -51,9 +51,9 @@ public class PlayerChooserPlayerList extends ContainerObjectSelectionList<Custom
                 .sorted(Map.Entry.comparingByValue())
                 .forEach((entry -> {
                     PlayerInfo info = clientpacketlistener.getPlayerInfo(entry.getKey());
-                    if(info !=null){
+                    if (info != null) {
                         UUID uuid = info.getProfile().getId();
-                        listings.put(uuid,new CustomPlayerEntry(minecraft,screen,uuid,info.getProfile().getName(),info::getSkinLocation));
+                        listings.put(uuid, new CustomPlayerEntry(minecraft, screen, uuid, info.getProfile().getName(), info::getSkinLocation));
                     }
                 }));
     }
