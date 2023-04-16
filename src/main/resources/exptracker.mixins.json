@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.pugzarecute.exptracker.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "exptracker.refmap.json",
+  "mixins": [
+    "EndPortalDisableMixin",
+    "NetherPortalDisableMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
