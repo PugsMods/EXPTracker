@@ -1,0 +1,42 @@
+modLoader = "javafml" #mandatory
+loaderVersion = "[43,)"
+license = "GNU LGPL 3.0"
+issueTrackerURL="https://github.com/PugsMods/EXPTracker/issues" #optional
+[[mods]] #mandatory
+modId = "exptracker" #mandatory
+version = "${file.jarVersion}" #mandatory
+displayName = "EXPTracker" #mandatory
+#updateJSONURL="https://change.me.example.invalid/updates.json" #optional
+#displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
+#logoFile="EXPTracker.png" #optional
+credits="Textures and Ideas by SdataG" #optional
+authors="PugzAreCute" #optional
+description = '''
+A mod to hunt players!
+'''
+[[dependencies.exptracker]] #optional
+modId = "forge" #mandatory
+mandatory = true #mandatory
+versionRange = "[43,)" #mandatory
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.exptracker]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.2,1.20)"
+ordering = "NONE"
+side = "BOTH"
+# We classload jounreymap
+[[dependencies.exptracker]]
+modId = "journeymap"
+mandatory = true
+versionRange = "[5.9.5,)"
+ordering = "NONE"
+side = "BOTH"
+# To end hunt
+[[dependencies.exptracker]]
+modId = "javd"
+mandatory = true
+versionRange = "[4.0.1,)"
+ordering = "NONE"
+side = "BOTH"

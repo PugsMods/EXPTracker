@@ -1,0 +1,18 @@
+{
+  "item.exptracker.tracking_compass": "Satellite-based tracking device",
+  "exptracker.self_hunt": "§1『§cTracker§1』§dYou can not hunt yourself, silly!§r",
+  "exptracker.overworld": "§1『§cTracker§1』§dHunting only works in the overworld§r",
+  "exptracker.hunt_in_progress": "§1『§cTracker§1』§dYou are already hunting someone.§r",
+  "exptracker.dimension": "§1『§cTracker§1』§dYou must be in the same dimension as the player you wish to hunt§r",
+  "exptracker.hunted": "§1『§cTracker§1』§d%1$s is hunting you.§r",
+  "exptracker.hunt_win": "§1『§cTracker§1』§dYou won the hunt!§r",
+  "exptracker.hunter_lose": "§1『§cTracker§1』§dThe player who you were hunting has won. Hunting over§r",
+  "exptracker.hunted_left": "§1『§cTracker§1』§dThe player who you were hunting has left the game. Tracker has been returned.§r",
+  "exptracker.hunter_leave": "§1『§cTracker§1』§dThe player who was hunting you has left the game. Tracking has ended.§r",
+  "exptracker.hunted_death": "§1『§cTracker§1』§dThe player you were hunting died.§r",
+  "exptracker.hunter_death": "§1『§cTracker§1』§dThe player who was hunting you died.§r",
+  "exptracker.hunt_start": "§1『§cTracker§1』§dHunting has begun.§r",
+  "exptracker.no_players": "§1『§cTracker§1』§dAtleast two players are needed to attempt hunting§r",
+  "exptracker.search_hint": "Search for a player to hunt...",
+  "exptracker.empty_search": "Couldn't find that player :("
+}
