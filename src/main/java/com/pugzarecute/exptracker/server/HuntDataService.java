@@ -1,5 +1,7 @@
 package com.pugzarecute.exptracker.server;
 
+import com.pugzarecute.exptracker.capability.HuntCapability;
+import com.pugzarecute.exptracker.capability.HuntCapabilityProvider;
 import com.pugzarecute.exptracker.networking.EXPTrackerPacketHandler;
 import com.pugzarecute.exptracker.networking.HuntDataPacketS2C;
 import net.minecraft.core.BlockPos;
@@ -25,26 +27,27 @@ public class HuntDataService extends Thread {
     }
 
     public void run() {
+        hunted.getCapability(HuntCapabilityProvider.HUNT_CAPABILITY).ifPresent(hunt->{
         Random random = ThreadLocalRandom.current();
 
         int x = (int) hunted.getX() - random.nextInt(0, 63);
-        ;
+
         int y = (int) hunted.getY() - random.nextInt(-15, 15);
-        ;
+
         int z = (int) hunted.getZ() - random.nextInt(0, 63);
-        ;
+
         lastSentPos = new ChunkPos(new BlockPos(x, y, z));
 
         EXPTrackerPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) hunter), new HuntDataPacketS2C(false, x, y, z));
 
-        while (hunter.getPersistentData().getBoolean("exptracker.currently_hunting")) {
+        while (hunt.isCurrentlyHunting()) {
 
             x = (int) hunted.getX() - random.nextInt(0, 63);
-            ;
+
             y = (int) hunted.getY() - random.nextInt(-15, 15);
-            ;
+
             z = (int) hunted.getZ() - random.nextInt(0, 63);
-            ;
+
 
             BlockPos initXYZ = new BlockPos(x, y, z);
 
@@ -54,11 +57,11 @@ public class HuntDataService extends Thread {
 
             while (!(cCP_repeat(hunted.chunkPosition(), new_square))) {
                 x = (int) hunted.getX() - random.nextInt(0, 63);
-                ;
+
                 y = (int) hunted.getY() - random.nextInt(-15, 15);
-                ;
+
                 z = (int) hunted.getZ() - random.nextInt(0, 63);
-                ;
+
 
                 initXYZ = new BlockPos(x, y, z);
 
@@ -82,7 +85,7 @@ public class HuntDataService extends Thread {
             }
         }
         EXPTrackerPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) hunter), new HuntDataPacketS2C(true, 0, 0, 0));
-    }
+    });}
 
     private static boolean cCP_repeat(ChunkPos a, List<ChunkPos> b) {
         for (ChunkPos c : b) {

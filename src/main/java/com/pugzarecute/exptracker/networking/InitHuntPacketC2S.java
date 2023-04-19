@@ -42,14 +42,15 @@ public class InitHuntPacketC2S {
                 } else if (player.getServer().getPlayerList().getPlayerCount() <= 1) {
                     player.sendSystemMessage(Component.translatable("exptracker.no_players"));
                     contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
-                } else if (!(level.dimensionTypeId() == BuiltinDimensionTypes.OVERWORLD)) {
+                } else if (level.dimensionTypeId() != BuiltinDimensionTypes.OVERWORLD) {
                     contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
 
                     player.sendSystemMessage(Component.translatable("exptracker.overworld"));
                     player.getCooldowns().addCooldown(ItemRg.TRACKING_COMPASS.get(), 20);
                 } else if (player.getPersistentData().getBoolean("exptracker.currently_hunting")) {
                     contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
-
+                    success.set(true);
+                    player.getPersistentData().remove("exptracker.safety_token");
                     player.sendSystemMessage(Component.translatable("exptracker.hunt_in_progress"));
                     player.getCooldowns().addCooldown(ItemRg.TRACKING_COMPASS.get(), 20);
                 } else if (contextSupplier.get().getSender().level.dimensionTypeId() != contextSupplier.get().getSender().getServer().getPlayerList().getPlayer(whom).level.dimensionTypeId()) {
