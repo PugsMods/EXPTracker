@@ -111,7 +111,7 @@ public class PlayerChooserScreen extends Screen {
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         if (players.size() == 0) {
             Minecraft.getInstance().player.sendSystemMessage(Component.translatable("exptracker.no_players"));
-            Minecraft.getInstance().setScreen(null);
+            Minecraft.getInstance().popGuiLayer();
         }
         renderBackground(poseStack);
         drawString(poseStack, minecraft.font, Component.literal("Choose a player to hunt."), marginX() + 8, 35, -1);

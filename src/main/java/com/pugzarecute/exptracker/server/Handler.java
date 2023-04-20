@@ -45,7 +45,6 @@ public class Handler {
             hunt.setCurrentlyHunting(false);
         });
         playerData.putBoolean("exptracker.safety_token", false);
-        hunted.sendSystemMessage(Component.translatable("exptracker.hunted", hunter.getName().getString()));
         hunted.getCapability(HuntCapabilityProvider.HUNT_CAPABILITY).ifPresent(hunt -> {
             hunt.setCurrentlyHunting(false);
         });

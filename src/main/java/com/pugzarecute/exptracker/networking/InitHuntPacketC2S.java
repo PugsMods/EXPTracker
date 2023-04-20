@@ -1,5 +1,6 @@
 package com.pugzarecute.exptracker.networking;
 
+import com.pugzarecute.exptracker.capability.HuntCapabilityProvider;
 import com.pugzarecute.exptracker.item.ItemRg;
 import com.pugzarecute.exptracker.server.Handler;
 import net.minecraft.network.FriendlyByteBuf;
@@ -36,6 +37,7 @@ public class InitHuntPacketC2S {
             Level level = contextSupplier.get().getSender().level;
             Player player = contextSupplier.get().getSender();
             if (player.getPersistentData().getBoolean("exptracker.safety_token")) {
+                player.getCapability(HuntCapabilityProvider.HUNT_CAPABILITY).ifPresent(hunt ->{
                 if (player.getUUID().equals(this.whom)) {
                     player.sendSystemMessage(Component.translatable("exptracker.self_hunt"));
                     contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
@@ -47,7 +49,7 @@ public class InitHuntPacketC2S {
 
                     player.sendSystemMessage(Component.translatable("exptracker.overworld"));
                     player.getCooldowns().addCooldown(ItemRg.TRACKING_COMPASS.get(), 20);
-                } else if (player.getPersistentData().getBoolean("exptracker.currently_hunting")) {
+                } else if (hunt.isCurrentlyHunting()) {
                     contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
                     success.set(true);
                     player.getPersistentData().remove("exptracker.safety_token");
@@ -61,7 +63,7 @@ public class InitHuntPacketC2S {
                 } else {
                     success.set(true);
                     Handler.onPlayerChoose(contextSupplier.get().getSender(), contextSupplier.get().getSender().getLevel().getServer().getPlayerList().getPlayer(whom));
-                }
+                }});
                 if (!success.get()) Handler.cleanup(player, player);
             }
         });
