@@ -95,7 +95,7 @@ public class EXPTracker {
             Player hunter = player.getLevel().getServer().getPlayerList().getPlayer(hunt.getOther());
             hunter.sendSystemMessage(Component.translatable("exptracker.hunted_left"));
             Handler.cleanup(hunter, player);
-            hunter.getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
+            addItem(hunter);
         } else if (hunt.isCurrentlyHunting() && hunt.isCurrentlyHunting()) {
             //Hunter
             Player hunted = player.getLevel().getServer().getPlayerList().getPlayer(hunt.getOther());
@@ -122,5 +122,10 @@ public class EXPTracker {
     @SubscribeEvent
     public void onCapReg(RegisterCapabilitiesEvent event){
         event.register(HuntCapability.class);
+    }
+    public static void addItem(Player player){
+        if(!player.getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance())){
+            player.drop(ItemRg.TRACKING_COMPASS.get().getDefaultInstance(),false);
+        }
     }
 }

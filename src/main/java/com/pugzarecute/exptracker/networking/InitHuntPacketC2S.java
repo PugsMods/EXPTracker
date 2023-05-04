@@ -1,5 +1,6 @@
 package com.pugzarecute.exptracker.networking;
 
+import com.pugzarecute.exptracker.EXPTracker;
 import com.pugzarecute.exptracker.capability.HuntCapabilityProvider;
 import com.pugzarecute.exptracker.item.ItemRg;
 import com.pugzarecute.exptracker.server.Handler;
@@ -40,23 +41,23 @@ public class InitHuntPacketC2S {
                 player.getCapability(HuntCapabilityProvider.HUNT_CAPABILITY).ifPresent(hunt ->{
                 if (player.getUUID().equals(this.whom)) {
                     player.sendSystemMessage(Component.translatable("exptracker.self_hunt"));
-                    contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
+                    EXPTracker.addItem(contextSupplier.get().getSender());
                 } else if (player.getServer().getPlayerList().getPlayerCount() <= 1) {
                     player.sendSystemMessage(Component.translatable("exptracker.no_players"));
-                    contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
+                    EXPTracker.addItem(contextSupplier.get().getSender());
                 } else if (level.dimensionTypeId() != BuiltinDimensionTypes.OVERWORLD) {
-                    contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
+                    EXPTracker.addItem(contextSupplier.get().getSender());
 
                     player.sendSystemMessage(Component.translatable("exptracker.overworld"));
                     player.getCooldowns().addCooldown(ItemRg.TRACKING_COMPASS.get(), 20);
                 } else if (hunt.isCurrentlyHunting()) {
-                    contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
+                    EXPTracker.addItem(contextSupplier.get().getSender());
                     success.set(true);
                     player.getPersistentData().remove("exptracker.safety_token");
                     player.sendSystemMessage(Component.translatable("exptracker.hunt_in_progress"));
                     player.getCooldowns().addCooldown(ItemRg.TRACKING_COMPASS.get(), 20);
                 } else if (contextSupplier.get().getSender().level.dimensionTypeId() != contextSupplier.get().getSender().getServer().getPlayerList().getPlayer(whom).level.dimensionTypeId()) {
-                    contextSupplier.get().getSender().getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
+                    EXPTracker.addItem(contextSupplier.get().getSender());
 
                     contextSupplier.get().getSender().sendSystemMessage(Component.translatable("exptracker.dimension"));
                     contextSupplier.get().getSender().getPersistentData().putBoolean("exptracker.safety_token", false);
