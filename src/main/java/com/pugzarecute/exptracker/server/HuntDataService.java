@@ -66,7 +66,7 @@ public class HuntDataService extends Thread {
                 initXYZ = new BlockPos(x, y, z);
 
                 new_square = genChunkSet(new ChunkPos(initXYZ));
-                System.out.println("LOOP");
+                
             }
 
 
@@ -81,7 +81,7 @@ public class HuntDataService extends Thread {
             try {
                 Thread.sleep(10 * 1000);
             } catch (InterruptedException e) {
-                System.out.println("insomnia");
+                
             }
         }
         EXPTrackerPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) hunter), new HuntDataPacketS2C(true, 0, 0, 0));

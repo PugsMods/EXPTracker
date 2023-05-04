@@ -32,7 +32,7 @@ public class PlayerChooserScreen extends Screen {
 
     public PlayerChooserScreen(Map<UUID, Float> players) {
         super(Component.literal("HuntScreen"));
-        System.out.println(players.size());
+        
         this.players = players;
     }
 

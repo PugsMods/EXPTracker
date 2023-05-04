@@ -1,5 +1,6 @@
 package com.pugzarecute.exptracker.networking;
 
+import com.pugzarecute.exptracker.EXPTracker;
 import com.pugzarecute.exptracker.item.ItemRg;
 import com.pugzarecute.exptracker.server.Handler;
 import net.minecraft.network.FriendlyByteBuf;
@@ -27,7 +28,7 @@ public class RefundItemsIfPlayerlistEmptyC2S {
         contextSupplier.get().enqueueWork(() -> {
             if (contextSupplier.get().getSender().getPersistentData().getBoolean("exptracker.safety_token")) {
                 Handler.cleanup(contextSupplier.get().getSender(), contextSupplier.get().getSender());
-                contextSupplier.get().getSender().addItem(ItemRg.TRACKING_COMPASS.get().getDefaultInstance());
+                EXPTracker.addItem(contextSupplier.get().getSender());
             }
             success.set(true);
         });
