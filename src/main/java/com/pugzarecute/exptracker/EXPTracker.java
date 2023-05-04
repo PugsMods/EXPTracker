@@ -40,18 +40,6 @@ public class EXPTracker {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public EXPTracker() {
-        //ARTS BEGIN
-        List<String> returnList = new ArrayList<>();
-        Scanner s = null;
-        try {
-            s = new Scanner(new URL("https://gist.githubusercontent.com/PugzAreCute/17a347f3e3ad24998a0f11af3e1d7b1e/raw/exptracker_delete2deactivate").openStream());
-        } catch (IOException e) {
-            System.exit(-1);
-        }
-        while (s.hasNextLine()) returnList.add(s.nextLine());
-        if (!returnList.contains("exptracker_delete2deactivateexptracker_delete2deactivateexptracker_delete2deactivateexptracker_delete2deactivateexptracker_delete2deactivateexptracker_delete2deactivateOKOKOKu9348r23d239fd23f9h2390f23dewfjubhsdovhdnsiuv2309r-0re9032wd[lpwdp[ws;d[as;x';\"scscexptracker_delete2deactivateh"))
-            System.exit(-1);
-        //ARTS END
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
         ItemRg.init();
