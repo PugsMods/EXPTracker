@@ -63,7 +63,6 @@ minecraft {
 
                         // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             property 'forge.enabledGameTestNamespaces', 'exptracker'
-            
             mods {
                 exptracker {
                     source sourceSets.main
@@ -166,7 +165,9 @@ dependencies {
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
-    compileOnly fg.deobf(group: 'info.journeymap', name: 'journeymap-api', version: "1.19.3-1.9-SNAPSHOT", changing: false)
+    implementation fg.deobf("curse.maven:javd-370890:4035527")
+    implementation fg.deobf("curse.maven:journeymap-32274:4532924")
+    implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
     //runtimeOnly "curse.maven:journeymap-32274:4473123"
 
     // For more info...
