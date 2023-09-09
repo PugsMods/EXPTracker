@@ -118,6 +118,7 @@ public class EXPTracker {
         event.register(HuntCapability.class);
     }
     public static void addItem(Player player){
+        if(player.isCreative()) return;
         if(!player.getInventory().add(ItemRg.TRACKING_COMPASS.get().getDefaultInstance())){
             player.drop(ItemRg.TRACKING_COMPASS.get().getDefaultInstance(),false);
         }
